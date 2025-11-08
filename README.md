@@ -40,6 +40,8 @@ Note: Fusion 360's Python environment will report unresolved imports (e.g., `ads
    - Enable "Show Debug Info" to write the debug file to the script folder.
 4. Execute. The script will apply the alignment (and flip if requested). If debug is enabled, `mesh_align_debug.txt` will be saved alongside the script.
 
+<img width="901" height="1020" alt="fusion360" src="https://github.com/user-attachments/assets/9bc1c4ba-4405-4240-a303-2b86788988ab" />
+
 ## Debug output
 
 When "Show Debug Info" is enabled, the script writes a human-readable `mesh_align_debug.txt` file containing:
@@ -93,5 +95,6 @@ Align example:
 Flip demo (Before / After):
 
 ![Flip demo](assets/flip_demo.svg)
+
 
 If you prefer real screenshots or an animated GIF, add your exported images to `assets/` with filenames `screenshot1.png`, `preview.gif`, etc., and the README will render them on GitHub.
