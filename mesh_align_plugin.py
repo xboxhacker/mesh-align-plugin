@@ -113,17 +113,27 @@ class MeshAlignCommandCreatedHandler(adsk.core.CommandCreatedEventHandler):
             # Add flip direction checkbox
             inputs.addBoolValueInput('flipDirection', 'Flip 180° on Plane 1', True, '', False)
             
-            # Show a brief usage message before the user selects planes
+            # Show a brief usage message before the user selects planes — only on first run
             try:
-                ui.messageBox(
-                    'How to use this tool:\n\n'
-                    '- Direct Edit Mesh\n'
-                    "- Create Plane Through 3 Points (Create more if needed)\n\n"
-                    'Select the mesh and then the source/target planes as prompted.',
-                    'Mesh Align - Usage'
-                )
-            except:
-                # Ignore any UI errors here; it's non-critical
+                import os
+                script_dir = os.path.dirname(os.path.abspath(__file__))
+                seen_file = os.path.join(script_dir, '.mesh_align_seen')
+                if not os.path.exists(seen_file):
+                    ui.messageBox(
+                        'How to use this tool:\n\n'
+                        '- Direct Edit Mesh\n'
+                        "- Create Plane Through 3 Points (Create more if needed)\n\n"
+                        'Select the mesh and then the source/target planes as prompted.',
+                        'Mesh Align - Usage'
+                    )
+                    try:
+                        # Create the marker file so the message is not shown again
+                        open(seen_file, 'w').close()
+                    except:
+                        # If writing fails, ignore — best effort only
+                        pass
+            except Exception:
+                # Ignore any UI/errors here; it's non-critical
                 pass
             
         except:

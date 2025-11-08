@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="240" viewBox="0 0 600 240">
+  <style>
+    .mesh{fill:#ffdca8;stroke:#b36b00;stroke-width:2}
+    .axis{stroke:#cc0000;stroke-width:3}
+    .label{font:13px sans-serif;fill:#222}
+  </style>
+  <!-- Left: static axis and mesh for context -->
+  <g transform="translate(60,20)">
+    <text x="10" y="16" class="label">Flip animation (loop)</text>
+  </g>
+
+  <!-- Animated group centered at (300,120) -->
+  <g id="anim" transform="translate(300,120)">
+    <!-- Axis line -->
+    <line x1="120" y1="-80" x2="120" y2="80" class="axis"/>
+    <circle cx="120" cy="0" r="6" fill="#cc0000"/>
+
+    <!-- Mesh rectangle drawn centered at x=0 so scaling around group flips around axis at x=120 -->
+    <g id="meshGroup" transform="translate(-60,-40)">
+      <rect x="0" y="0" width="120" height="80" class="mesh" rx="6"/>
+      <text x="18" y="48" class="label">Mesh</text>
+    </g>
+
+    <!-- Animate: translate meshGroup so its center is offset from axis, then scale X to flip -->
+    <animateTransform xlink:href="#meshGroup"
+                      attributeName="transform"
+                      type="translate"
+                      values="-60,-40; -60,-40; -60,-40"
+                      dur="2s" repeatCount="indefinite" />
+
+    <!-- Use a separate animateTransform on a wrapper to scale around group origin (which is not at axis) -->
+    <!-- We'll perform compound transforms by animating a scale on an outer g that shifts the mesh relative to axis -->
+    <g id="scaleWrapper" transform="translate(-60, -40)">
+      <rect x="0" y="0" width="120" height="80" class="mesh" rx="6"/>
+      <text x="18" y="48" class="label">Mesh</text>
+      <animateTransform attributeName="transform"
+                        type="scale"
+                        values="1 1; -1 1; 1 1"
+                        keyTimes="0; 0.5; 1"
+                        dur="2s"
+                        repeatCount="indefinite"/>
+    </g>
+
+    <!-- A small caption -->
+    <text x="-40" y="110" class="label">Axis (red) — mesh flips across axis</text>
+  </g>
+</svg>
